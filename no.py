@@ -4,6 +4,7 @@ class No():
         self.id = id
         self.visitado = False
         self.predecessor = []
+        self.input = 0
 
     def setVisitado(self, valor):
         self.visitado = valor
@@ -37,3 +38,5 @@ class No():
                    10 : "M Norte"}
         return (" Cidade  : %s \n Distancia: %i km\n" % (cidades[self.id], self.estimativa))  # imprimir o predecesso
 
+    def setInput(self, inp):
+        self.input = inp

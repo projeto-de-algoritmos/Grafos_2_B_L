@@ -84,7 +84,7 @@ class Grafo:
     ## Dijkstra
     def inicializa_fonte(self, fonte):
         for v in self.lista_nos:
-            v.setEstimativa(99999)
+            v.setEstimativa(9999999999)
             v.setVisitado(False)
         fonte.setVisitado(True)
         fonte.setEstimativa(0)
@@ -110,3 +110,67 @@ class Grafo:
         if v.getEstimativa() > (u.getEstimativa() + w.getPeso()):
             v.setEstimativa(u.getEstimativa() + w.getPeso())
             v.predecessor.append(u.getId())
+
+    def dijkstra(self, origem):
+        fonte = self.busca_vertice(origem)
+        if fonte is None:
+            return "Vertce Nulo"
+
+        self.inicializa_fonte(fonte)
+        lista = []
+        resposta = []  
+        for i in self.lista_nos:
+            lista.append(i)
+        while len(lista) != 0:
+            lista.sort()
+            u = lista[0]
+            v = self.busca_adjacente(u)
+            if v is None:
+                for i in self.lista_nos:
+                    i.setVisitado(False)
+                resposta.append(lista[0])
+                lista.pop(0)  # retira vertice sem adjacente da lista
+
+            else:
+                w = self.busca_aresta(u, v)
+                if w is not None:
+                    self.compara_no(u, v, w)
+
+        print("Estimativas: ")
+        for i in resposta:
+            print(i)  # imprime as respostas
+
+    #Implementacao do algoritimo de PRIM
+    def prim(self, origem):
+        
+        fonte = self.busca_no(origem)
+        
+        if fonte is None:
+            return "Vertice Nulo"
+
+        self.inicializa_fonte(fonte)
+        lista = []
+        for i in self.lista_nos:
+            lista.append(i)
+        lista.sort()
+        while len(lista) is not 0:
+            u = lista[0]
+            v = self.busca_adjacente(u)
+
+            if v is None:
+                for i in lista:  # prepara para ser visitado
+                    i.setVisitado(False)  # marca como n visitado
+                lista.sort()
+                lista.remove(u)
+            else:
+                w = self.busca_aresta(u, v)
+                if lista.count(v) > 0:
+                    if v.getEstimativa() > w.getPeso():
+                        v.predecessor = [u.getId()]
+                        v.setEstimativa(w.getPeso())
+
+        for u in self.lista_nos:
+            if len(u.predecessor) > 0:
+                print(u.predecessor, "------", u.getId())
+        self.lista_nos.sort(key=lambda u: u.input, reverse=False)
+        
