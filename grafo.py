@@ -222,7 +222,7 @@ class Grafo:
         display_surface = pygame.display.set_mode((X, Y )) 
         
         # set the pygame window name 
-        pygame.display.set_caption('Show Text') 
+        pygame.display.set_caption('Grafos dijkstra') 
         
         # create a font object. 
         # 1st parameter is the font file 

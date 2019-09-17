@@ -16,8 +16,14 @@ Alunos:
 
 ### Executar programa
 
-Para executar o projeto basta ir no terminal até a pasta trabalho_01 e executar o comando abaixo:
+Para executar o projeto basta clonar o repositorio e ir no terminal até a pasta  executar o comando abaixo:
 
 $ python main.py
 
-Após isso e so seguir os passos sugeridos.
+É necessário ter o [py-game](https://www.pygame.org/docs/) instalado.
+
+### Prints aplicação
+
+![implementação prim](./prim.png)
+
+![implementação dijkstra](./dijkstra.png)
