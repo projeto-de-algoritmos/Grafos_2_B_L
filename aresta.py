@@ -13,7 +13,7 @@ class Aresta():
 	
 	def getPeso(self):
 		return self.peso
-		
+	
 	def setOrigem(self,vertice):
 		self.origem = vertice
 		

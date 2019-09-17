@@ -1,5 +1,7 @@
 from no import No
 from aresta import Aresta
+import pygame
+
 
 class Grafo:
     def __init__(self):
@@ -56,11 +58,14 @@ class Grafo:
 
     def visita(self, u):
         u.setVisitado(True)
+        u.setColor(2)
         lista = self.busca_todas_arestas(u)
-        print (len(lista))
+        #print (len(lista))
         for l in lista:
             if l.getVisitado() is False:
                 l.setVisitado(True)
+                l.setColor(2)
+
                 print("Visitando o no: %s" % l.getId())
         for m in lista:
             lista2 = self.busca_todas_arestas(m)
@@ -73,6 +78,8 @@ class Grafo:
 
         for v in self.lista_nos:
             v.setVisitado(False)
+            v.setColor(1)
+
         no_0 = self.busca_no(u)
 
         print("Visitando o no: %s" % no_0.getId())
@@ -86,7 +93,10 @@ class Grafo:
         for v in self.lista_nos:
             v.setEstimativa(9999999999)
             v.setVisitado(False)
+            v.setColor(1)
         fonte.setVisitado(True)
+        fonte.setColor(2)
+
         fonte.setEstimativa(0)
 
     def busca_vertice(self, identificador):
@@ -101,7 +111,9 @@ class Grafo:
             origem = self.lista_arestas[i].getOrigem()
             destino = self.lista_arestas[i].getDestino()
             if (u.getId() == origem.getId()) and (destino.getVisitado() == False):
-                destino.setVisitado(True) 
+                destino.setVisitado(True)
+                destino.setColor(2)
+
                 return destino
         else:
             return None
@@ -128,8 +140,10 @@ class Grafo:
             if v is None:
                 for i in self.lista_nos:
                     i.setVisitado(False)
+                    i.setColor(1)
                 resposta.append(lista[0])
                 lista.pop(0)  # retira vertice sem adjacente da lista
+
 
             else:
                 w = self.busca_aresta(u, v)
@@ -160,6 +174,7 @@ class Grafo:
             if v is None:
                 for i in lista:  # prepara para ser visitado
                     i.setVisitado(False)  # marca como n visitado
+                    i.setColor(1)                    
                 lista.sort()
                 lista.remove(u)
             else:
@@ -168,9 +183,98 @@ class Grafo:
                     if v.getEstimativa() > w.getPeso():
                         v.predecessor = [u.getId()]
                         v.setEstimativa(w.getPeso())
+        
+        print ("\nAlgoritmo de PRIM:\n")
 
         for u in self.lista_nos:
             if len(u.predecessor) > 0:
-                print(u.predecessor, "------", u.getId())
+                var = str(u.predecessor[0])
+                var2 = str(u.getId())
+                print("R" + var + " ------  " + "R" +  var2)
         self.lista_nos.sort(key=lambda u: u.input, reverse=False)
-        
+        for i in self.lista_nos:
+            print(i)
+
+        print("\n\n")
+
+
+    #implementacao da interface        
+    def display(self):
+        pygame.init()
+        screen = pygame.display.set_mode((500, 500))
+        done = False
+        color_pack = True
+        x = 30
+        y = 30
+
+        clock = pygame.time.Clock()
+
+        color_line=[]
+
+        while not done:
+            for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                            done = True
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                            color_pack = not color_pack
+                
+            pressed = pygame.key.get_pressed()
+            if pressed[pygame.K_UP]: y -= 3
+            if pressed[pygame.K_DOWN]: y += 3
+            if pressed[pygame.K_LEFT]: x -= 3
+            if pressed[pygame.K_RIGHT]: x += 3
+                
+            screen.fill((0, 0, 0))
+
+
+            if color_pack: 
+                        color = (0, 255, 0)
+            else: 
+                    self.dijktra(1)
+            x = 150
+            y = 100
+            for i in self.lista_nos:
+                if i.getColor() is 1:
+                        color_line.append((0, 255, 0))
+                else:
+                        color_line.append((255, 100, 0))
+
+            pygame.draw.circle(screen, color_line[3], (x+40, y), 5, 5)
+            pygame.draw.circle(screen, color_line[2], (x, y), 5, 5)
+            pygame.draw.circle(screen, color_line[1], (x-40, y), 5, 5)
+            pygame.draw.circle(screen, color_line[5], (x+30, y+40), 5, 5)
+            pygame.draw.circle(screen, color_line[4], (x-30, y+40), 5, 5)
+            pygame.draw.circle(screen, color_line[8], (x-50, y+80), 5, 5)
+            pygame.draw.circle(screen, color_line[6], (x+50, y+80), 5, 5)
+            pygame.draw.circle(screen, color_line[7], (x, y+80), 5, 5)
+            pygame.draw.circle(screen, color_line[9], (x+70, y+120), 5, 5)
+            pygame.draw.circle(screen, color_line[0], (x-70, y+120), 5, 5)
+            pygame.draw.circle(screen, color_line[10], (x+25, y+120), 5, 5)
+            pygame.draw.circle(screen, color_line[11], (x-25, y+120), 5, 5)
+            
+
+            pygame.draw.line(screen, color, [x,y],[x+30,y+40],1)
+            pygame.draw.line(screen, color, [x+40, y],[x+30,y+40],1)
+            pygame.draw.line(screen, color, [x,y],[x+40, y],1)
+            pygame.draw.line(screen, color, [x-40, y],[x, y],1)
+            pygame.draw.line(screen, color, [x, y],[x-30, y+40],1)
+            
+            pygame.draw.line(screen, color, [x-30, y+40],[x-50, y+80],1)
+            pygame.draw.line(screen, color, [x-30, y+40],[x, y+80],1)
+
+            pygame.draw.line(screen, color, [x+30, y+40],[x-50, y+80],1)
+            pygame.draw.line(screen, color, [x+30, y+40],[x, y+80],1)
+            pygame.draw.line(screen, color, [x+30, y+40],[x+50, y+80],1)
+
+            pygame.draw.line(screen, color, [x+50, y+80],[x+70, y+120],1)
+            pygame.draw.line(screen, color, [x+50, y+80],[x+25, y+120],1)
+            pygame.draw.line(screen, color, [x, y+80],[x+25, y+120],1)
+            pygame.draw.line(screen, color, [x, y+80],[x-25, y+120],1)
+            pygame.draw.line(screen, color, [x-50, y+80],[x-70, y+120],1)
+
+            pygame.draw.line(screen, color, [x-40, y],[x-70, y+120],1)
+
+            pygame.display.flip()
+            clock.tick(60)
+
+

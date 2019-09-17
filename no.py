@@ -5,7 +5,14 @@ class No():
         self.visitado = False
         self.predecessor = []
         self.input = 0
-
+        self.color = 1
+	
+    def getColor(self):
+        return self.color
+				
+    def setColor(self, color):
+        self.color = color 
+				
     def setVisitado(self, valor):
         self.visitado = valor
 
@@ -35,7 +42,9 @@ class No():
                    7 : "P SUl",
                    8 : "Samanbaia",
                    9 : "Brasilia",
-                   10 : "M Norte"}
+                   10 : "M Norte",
+                   11 :"manaus",
+                   12: "Ceara"}
         return (" Cidade  : %s \n Distancia: %i km\n" % (cidades[self.id], self.estimativa))  # imprimir o predecesso
 
     def setInput(self, inp):
