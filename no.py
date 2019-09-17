@@ -45,7 +45,7 @@ class No():
                    10 : "M Norte",
                    11 :"manaus",
                    12: "Ceara"}
-        return (" Cidade  : %s \n Distancia: %i km\n" % (cidades[self.id], self.estimativa))  # imprimir o predecesso
+        return (" R1 : %s \n Peso: %i " % (self.id, self.estimativa))  # imprimir o predecesso
 
     def setInput(self, inp):
         self.input = inp

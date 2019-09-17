@@ -9,6 +9,36 @@ y = 30
  
 clock = pygame.time.Clock()
  
+X = 400
+Y = 400
+
+black = (0, 0, 0) 
+green = (0, 255, 0) 
+blue = (0, 0, 128) 
+  
+# create the display surface object 
+# of specific dimension..e(X, Y). 
+display_surface = pygame.display.set_mode((X, Y )) 
+  
+# set the pygame window name 
+pygame.display.set_caption('Show Text') 
+  
+# create a font object. 
+# 1st parameter is the font file 
+# which is present in pygame. 
+# 2nd parameter is size of the font 
+font = pygame.font.Font('freesansbold.ttf', 32) 
+  
+# create a text suface object, 
+# on which text is drawn on it. 
+text = font.render('Aplicacao Dijkstra', True, green, blue) 
+  
+# create a rectangular object for the 
+# text surface object 
+textRect = text.get_rect()  
+  
+# set the center of the rectangular object. 
+textRect.center = (200, 40) 
 
 while not done:
         for event in pygame.event.get():
@@ -24,6 +54,8 @@ while not done:
         if pressed[pygame.K_RIGHT]: x += 3
          
         screen.fill((0, 0, 0))
+        display_surface.fill(black) 
+        display_surface.blit(text, textRect) 
 
         color_line=[]
         x=0
@@ -43,7 +75,7 @@ while not done:
         pygame.draw.circle(screen, color, (x+40, y), 5, 5)
         pygame.draw.circle(screen, color, (x-40, y), 5, 5)
         pygame.draw.circle(screen, color, (x+30, y+40), 5, 5)
-        pygame.draw.circle(screen, color, (x, y+40), 5, 5)
+        pygame.draw.circle(screen, color, (x-30, y+40), 5, 5)
         pygame.draw.circle(screen, color, (x-50, y+80), 5, 5)
         pygame.draw.circle(screen, color, (x+50, y+80), 5, 5)
         pygame.draw.circle(screen, color, (x, y+80), 5, 5)

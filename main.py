@@ -37,6 +37,9 @@ g.nova_aresta(6,9,23)
 n = 0
 
 inicio = time.time()
+
 g.prim(1)
 
 g.display()
+
+

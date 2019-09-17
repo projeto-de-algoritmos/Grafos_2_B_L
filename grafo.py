@@ -192,10 +192,8 @@ class Grafo:
                 var2 = str(u.getId())
                 print("R" + var + " ------  " + "R" +  var2)
         self.lista_nos.sort(key=lambda u: u.input, reverse=False)
-        for i in self.lista_nos:
-            print(i)
 
-        print("\n\n")
+        print("\n\n#########################\n\n")
 
 
     #implementacao da interface        
@@ -211,6 +209,40 @@ class Grafo:
 
         color_line=[]
 
+
+        X = 400
+        Y = 400
+
+        black = (0, 0, 0) 
+        green = (0, 255, 0) 
+        blue = (0, 0, 128) 
+        
+        # create the display surface object 
+        # of specific dimension..e(X, Y). 
+        display_surface = pygame.display.set_mode((X, Y )) 
+        
+        # set the pygame window name 
+        pygame.display.set_caption('Show Text') 
+        
+        # create a font object. 
+        # 1st parameter is the font file 
+        # which is present in pygame. 
+        # 2nd parameter is size of the font 
+        font = pygame.font.Font('freesansbold.ttf', 32) 
+        
+        # create a text suface object, 
+        # on which text is drawn on it. 
+        text = font.render('Aplicacao Dijkstra', True, green, blue) 
+        
+        # create a rectangular object for the 
+        # text surface object 
+        textRect = text.get_rect()  
+        
+        # set the center of the rectangular object. 
+        textRect.center = (200, 40) 
+
+        cont = -1000000000000
+
         while not done:
             for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -225,15 +257,19 @@ class Grafo:
             if pressed[pygame.K_RIGHT]: x += 3
                 
             screen.fill((0, 0, 0))
+            display_surface.fill(black) 
+            display_surface.blit(text, textRect) 
 
 
             if color_pack: 
                         color = (0, 255, 0)
-            else: 
-                    self.dijktra(1)
+            else:
+                    if cont >1000:
+                        self.dijkstra(1)
             x = 150
             y = 100
             for i in self.lista_nos:
+                #print(i.getColor())
                 if i.getColor() is 1:
                         color_line.append((0, 255, 0))
                 else:
@@ -277,4 +313,4 @@ class Grafo:
             pygame.display.flip()
             clock.tick(60)
 
-
+            cont=cont +1
